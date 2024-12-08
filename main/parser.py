@@ -29,6 +29,8 @@ class Parser:
             return self.parse_assignment()
         elif token_type == "IDENTIFIER" and value == "print":
             return self.parse_print()
+        elif token_type == "ASSIGNMENT" and value == "read":
+            return self.parse_read()
         else:
             raise SyntaxError(f"Unexpected token: {value}")
 
@@ -47,6 +49,17 @@ class Parser:
             "value": expression
         }
 
+    def parse_read(self):
+        """Parse a read file statement."""
+        self.consume("ASSIGNMENT")  # Consume 'read'
+        filename = self.parse_expression()
+        if not filename:
+            raise SyntaxError("Expected filename after 'read'")
+        return {
+            "type": "read_file",
+            "filename": filename
+        }
+    
     def parse_print(self):
         self.consume("IDENTIFIER")  # Consume 'print'
         expression = self.parse_expression()

@@ -1,0 +1,32 @@
+# example.txt - SimpleScript Example Program
+
+# Variable assignment
+set message to "Hello, SimpleScript!"
+print message
+
+# Arithmetic operations
+set number1 to 10
+set number2 to 5
+
+# Basic arithmetic
+print number1 + number2
+print number1 - number2
+print number1 * number2
+print number1 / number2
+
+# Using variables in expressions
+set result to number1 + number2
+print result
+
+# Demonstrating comparison operators
+set x to 5
+set y to 10
+
+# More complex arithmetic
+set calculation to (x + y) * 2
+print calculation
+
+# String operations
+set greeting to "Hello"
+set name to "World"
+print greeting + " " + name

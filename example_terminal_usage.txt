@@ -1,0 +1,27 @@
+Example
+
+1. cd simplescript
+
+2. python main.py
+
+
+>>> set x to 10
+Result: 10
+>>> set y to 15
+Result: 15
+>>> print z to x + y
+Error: Undefined variable: z
+>>> set z to x + y
+Result: 25
+>>> print z
+25
+Result: 25
+>>> print a
+Error: Undefined variable: a
+>>> set b to 5 / 0
+Error: Division by zero is undefined.
+>>> print " hello"
+" hello"
+Result: " hello"
+>>> quit
+Exiting SimpleScript.

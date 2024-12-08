@@ -4,19 +4,20 @@ class Lexer:
     def __init__(self):
         self.keywords = {
             "set", "to", "print", "ask", "and", "store", "if", "then", "else",
-            "while", "do", "repeat", "function", "output", "end"
+            "while", "do", "repeat", "function", "output", "end", "read"  # Added 'read'
         }
         self.token_patterns = [
-            (r'\b\d+(\.\d+)?\b', "NUMBER"),  # Number
-            (r'"[^"]*"', "STRING"),          # String
+            (r'\b\d+(\.\d+)?\b', "NUMBER"),
+            (r'"[^"]*"', "STRING"),
             (r'\b(is equal to|is not equal to|is greater than|is less than|is greater than or equal to|is less than or equal to)\b', "COMPARISON"),
             (r'\b(and|or|not)\b', "LOGICAL"),
-            (r'\b(set|to)\b', "ASSIGNMENT"),
+            (r'\b(set|to|read)\b', "ASSIGNMENT"),  # Added 'read' to assignment tokens
             (r'[+\-*/%]', "ARITHMETIC"),
-            (r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', "IDENTIFIER"),  # Variable names
-            (r'[{}()\[\],]', "SYMBOL"),      # Symbols
-            (r'\s+', None),                  # Skip whitespace
+            (r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', "IDENTIFIER"),
+            (r'[{}()\[\],]', "SYMBOL"),
+            (r'\s+', None),
         ]
+
 
     def tokenize(self, code):
         tokens = []  # Start fresh for each input
