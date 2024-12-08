@@ -1,32 +1,46 @@
-# example.txt - SimpleScript Example Program
+# Example SimpleScript Program - TO RUN:  python main.py example.txt
 
-# Variable assignment
-set message to "Hello, SimpleScript!"
-print message
 
-# Arithmetic operations
-set number1 to 10
-set number2 to 5
-
-# Basic arithmetic
-print number1 + number2
-print number1 - number2
-print number1 * number2
-print number1 / number2
-
-# Using variables in expressions
-set result to number1 + number2
-print result
-
-# Demonstrating comparison operators
+# Basic variable assignment and arithmetic
 set x to 5
 set y to 10
-
-# More complex arithmetic
-set calculation to (x + y) * 2
-print calculation
+print "Basic Math:"
+print x + y
+print x * y
+print y / x
 
 # String operations
-set greeting to "Hello"
-set name to "World"
-print greeting + " " + name
+set name to "SimpleScript"
+print "String concatenation: Hello, " + name
+
+# Boolean operations and comparisons
+print "Comparisons:"
+print x is less than y
+print x is equal to 5
+set is_valid to true
+print is_valid and x is less than y
+
+# Array operations using group
+set numbers to group [1, 2, 3, 4, 5]
+print numbers[0]
+set numbers[1] to 20
+print numbers[1]
+
+# Function definition and factorial calculation
+function factorial(n)
+    if n is less than or equal to 1 then
+        return 1
+    else
+        return n * factorial(n - 1)
+    end
+end
+
+print "Factorial of 5:"
+print factorial(5)
+
+# While loop example
+set counter to 0
+while counter is less than 5 do
+    print counter
+    set counter to counter + 1
+end
