@@ -9,17 +9,20 @@ class Lexer:
             "true", "false", "return", "group"
         }
         self.token_patterns = [
-            (r'\b\d+(\.\d+)?\b', "NUMBER"),
-            (r'"[^"]*"', "STRING"),
-            (r'\b(is equal to|is not equal to|is greater than|is less than|is greater than or equal to|is less than or equal to)\b', "COMPARISON"),
+            # First match keywords and compound operators
+            (r'\b(function|if|then|else|while|do|end|return|group|ask)\b', "KEYWORD"),
+            (r'\b(is equal to|is not equal to|is greater than or equal to|is less than or equal to|is greater than|is less than)\b', "COMPARISON"),
             (r'\b(and|or|not)\b', "LOGICAL"),
             (r'\b(true|false)\b', "BOOLEAN"),
-            (r'\b(if|then|else|while|do|function|end|return|group|ask)\b', "KEYWORD"),
             (r'\b(set|to|read)\b', "ASSIGNMENT"),
+            # Then match literals and symbols
+            (r'\b\d+(\.\d+)?\b', "NUMBER"),
+            (r'"[^"]*"', "STRING"),
             (r'[+\-*/%]', "ARITHMETIC"),
+            (r'[\(\)\[\],]', "SYMBOL"),  # Separated symbols for better matching
+            # Match identifiers last to avoid keyword conflicts
             (r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', "IDENTIFIER"),
-            (r'[{}()\[\],]', "SYMBOL"),
-            (r'\s+', None),
+            (r'\s+', None),  # Skip whitespace
         ]
 
     def tokenize(self, code):

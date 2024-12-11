@@ -8,10 +8,14 @@ print "Basic Math:"
 print x + y
 print x * y
 print y / x
+print " "
+
 
 # String operations
 set name to "SimpleScript"
 print "String concatenation: Hello, " + name
+print " "
+
 
 # Boolean operations and comparisons
 print "Comparisons:"
@@ -19,12 +23,17 @@ print x is less than y
 print x is equal to 5
 set is_valid to true
 print is_valid and x is less than y
+print " "
+
 
 # Array operations using group
-set numbers to group [1, 2, 3, 4, 5]
+print "Array operations:"
+set numbers to group[1, 2, 3, 4, 5]
 print numbers[0]
 set numbers[1] to 20
 print numbers[1]
+print " "
+
 
 # Function definition and factorial calculation
 function factorial(n)
@@ -35,10 +44,13 @@ function factorial(n)
     end
 end
 
-print "Factorial of 5:"
+print "function call and factorial of 5:"
 print factorial(5)
+print " "
+
 
 # While loop example
+print "while loop example:"
 set counter to 0
 while counter is less than 5 do
     print counter

@@ -12,23 +12,19 @@ class SimpleScriptRunner:
         try:
             with open(filename, 'r') as file:
                 code = file.read()
-                # Split the code into lines and execute each line
                 lines = [line.strip() for line in code.split('\n') 
                         if line.strip() and not line.strip().startswith('#')]
                 
-                # Track line numbers for error reporting
                 current_line = 0
                 try:
                     while current_line < len(lines):
                         line = lines[current_line]
                         
-                        # Handle multi-line statements (function definitions, if statements, while loops)
                         if any(line.startswith(keyword) for keyword in ['function', 'if', 'while']):
                             block_lines = [line]
                             nesting_level = 1
                             current_line += 1
                             
-                            # Collect all lines in the block
                             while current_line < len(lines) and nesting_level > 0:
                                 line = lines[current_line]
                                 if any(line.startswith(keyword) for keyword in ['function', 'if', 'while']):
@@ -38,35 +34,34 @@ class SimpleScriptRunner:
                                 block_lines.append(line)
                                 current_line += 1
                             
-                            # Join the block lines and execute as one unit
                             block_code = ' '.join(block_lines)
-                            self.execute_line(block_code, current_line - len(block_lines) + 1)
+                            self.execute_line(block_code)
                         else:
-                            # Execute single-line statement
-                            self.execute_line(line, current_line + 1)
+                            self.execute_line(line)
                             current_line += 1
                             
                 except Exception as e:
-                    print(f"Error on line {current_line + 1}: {str(e)}")
+                    print(f"Error: {str(e)}")
                     
         except FileNotFoundError:
-            print(f"Error: File '{filename}' not found")
+            print(f"Error: File not found")
         except Exception as e:
-            print(f"Error reading file: {str(e)}")
+            print(f"Error: {str(e)}")
 
-    def execute_line(self, line, line_number):
+    def execute_line(self, line):
         """Execute a single line or block of SimpleScript code."""
         try:
             ast, error = self.parser.run(line)
             if error:
-                print(f"Error on line {line_number}: {error}")
+                print(f"Error: {error}")
             else:
                 result = self.interpreter.evaluate(ast)
                 # Only print results for expressions that aren't handled by print statements
-                if result is not None and not (isinstance(ast, dict) and ast.get('type') == 'print'):
-                    print(f"Line {line_number} result: {result}")
+                # and aren't assignments or function definitions
+                if result is not None and not isinstance(ast, dict):
+                    print(result)
         except Exception as e:
-            raise RuntimeError(f"Error executing line {line_number}: {str(e)}")
+            raise RuntimeError(f"Error: {str(e)}")
 
     def interactive_mode(self):
         """Run SimpleScript in interactive mode."""
@@ -83,12 +78,10 @@ class SimpleScriptRunner:
                     self.show_help()
                     continue
                 
-                # Handle multi-line input for blocks
                 if any(text.startswith(keyword) for keyword in ['function', 'if', 'while']):
                     block_text = [text]
                     nesting_level = 1
                     
-                    # Keep reading lines until the block is complete
                     while nesting_level > 0:
                         line = input('... ')
                         if any(line.startswith(keyword) for keyword in ['function', 'if', 'while']):
@@ -104,9 +97,9 @@ class SimpleScriptRunner:
                     print(f"Error: {error}")
                 else:
                     result = self.interpreter.evaluate(ast)
-                    # Only print results for expressions that aren't handled by print statements
-                    if result is not None and not (isinstance(ast, dict) and ast.get('type') == 'print'):
-                        print(f"Result: {result}")
+                    # Only print results that aren't from print statements
+                    if result is not None and not isinstance(ast, dict):
+                        print(result)
                         
             except KeyboardInterrupt:
                 print("\nUse 'exit' or 'quit' to exit SimpleScript.")
